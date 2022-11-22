@@ -19,5 +19,34 @@ make build
 If you do not need to generate a binary, you can simply `go run` (or `make run`) the program and see the possible options.
 
 ```
-go run cmd/nauclerus/main.go
+$ go run cmd/nauclerus/main.go serve --help
+
+Usage: nauclerus serve
+
+Start the server
+
+Flags:
+-h, --help         Show context-sensitive help.
+-v, --verbose      Enable debug output ($NAUCLERUS_VERBOSE)
+
+--debug        weither to enable debug mode ($NAUCLERUS_DEBUG)
+-p, --port=8080    HTTP Port to listen to ($NAUCLERUS_PORT)
+```
+
+### Configuration
+
+Run the app with --help to see configuration options. Most configuration controls are available as environment variables (useful in a docker context)
+
+## Architecture
+
+The project layout can be documented like this:
+
+```
+.
+├── application             # application container
+├── cli                     # CLI controllers, process command line arguments and start the program
+├── cmd                     # main func entrypoints, not go gettable
+├── http                    # HTTP controllers, process HTTP logic and routing
+├── service                 # Business logic for this service
+└── logger.go               # logging utils
 ```

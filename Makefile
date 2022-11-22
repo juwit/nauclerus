@@ -6,6 +6,12 @@ help: ## display this help message
 run: install ## run the app
 	go run cmd/nauclerus/main.go
 
+serve-dev: install ## starts the server on :8080 in dev mode
+	go run cmd/nauclerus/main.go serve -v --debug
+
+serve: install ## starts the server on :8080 in production mode
+	go run cmd/nauclerus/main.go serve
+
 lint: ## lint code (requires golangci-lint)
 	golangci-lint run
 
@@ -26,4 +32,4 @@ build: install ci ## generate binary
 clean: ## clean build output
 	rm -f nauclerus
 
-.PHONY: all help lint mod-verify test ci install build clean
+.PHONY: all help lint mod-verify test ci install build clean serve serve-dev
