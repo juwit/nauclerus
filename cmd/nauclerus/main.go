@@ -1,9 +1,12 @@
 package main
 
 import (
-	"fmt"
+	"log"
+
+	"github.com/juwit/nauclerus/http"
 )
 
 func main() {
-	fmt.Println("Nothing to see here.")
+	r := http.NewRouter()
+	log.Fatal(r.Run(":8080"))
 }
