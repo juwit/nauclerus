@@ -20,6 +20,8 @@ func Build(verbose, debugMode bool) (application Application, err error) {
 
 	router := http.NewRouter(greetMiddleware, debugMode, logger.With("layer", "routing"))
 
+	router.GET("/api/namespaces", http.NewClusterMiddleware(&cluster, logger.With("layer", "service")))
+
 	application.Logger = logger
 	application.DebugMode = debugMode
 	application.Router = router

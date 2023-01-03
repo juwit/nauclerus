@@ -1,7 +1,9 @@
 package service
 
 import (
+	"context"
 	"go.uber.org/zap"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -44,4 +46,17 @@ func OutOfClusterConfig(*zap.SugaredLogger) Cluster {
 	return Cluster{
 		Client: clientset,
 	}
+}
+
+func (cluster Cluster) ListNamespaces() []string {
+	namespaces, err := cluster.Client.CoreV1().Namespaces().List(context.TODO(), metav1.ListOptions{})
+	if err != nil {
+		panic(err.Error())
+	}
+
+	namespacesNames := make([]string, len(namespaces.Items))
+	for i, ns := range namespaces.Items {
+		namespacesNames[i] = ns.Name
+	}
+	return namespacesNames
 }
