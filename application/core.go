@@ -15,6 +15,9 @@ func Build(verbose, debugMode bool) (application Application, err error) {
 	greetService := service.NewGreetService(logger.With("layer", "service"))
 	greetMiddleware := http.NewGreetMiddleware(greetService, logger.With("layer", "http"))
 
+	// using out of cluster config for the start :)
+	cluster := service.OutOfClusterConfig(logger.With("layer", "service"))
+
 	router := http.NewRouter(greetMiddleware, debugMode, logger.With("layer", "routing"))
 
 	application.Logger = logger
